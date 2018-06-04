@@ -16,7 +16,7 @@ Website: https://windsup.ch/
 A small RFID reader is connected to a RN4020 (Microchip BLE module). Using UART, the app will be able to receive the SUP's ID,
 thus defining which type it is and link it to a price by time table.
 
-In the long run, Clients should be 
+In the long run, Clients infos should be embedded in the device, to follow Switzerland law of naval security.
 
 
 # Used Features:
