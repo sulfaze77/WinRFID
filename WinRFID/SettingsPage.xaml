@@ -25,7 +25,7 @@
                 
             </StackPanel>
         </PivotItem>
-        <PivotItem Header="Privacy statement" DataContext="{Binding About, Source={StaticResource Locator}}">
+        <PivotItem Header="Windsup" DataContext="{Binding About, Source={StaticResource Locator}}">
             <i:Interaction.Behaviors>
                 <local:HideablePivotItemBehavior Visible="{Binding Model.PrivacyStatement, Converter={StaticResource IsNotNullConverter}}" />
             </i:Interaction.Behaviors>
