@@ -6,18 +6,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.Content>
-                <Grid/>
-            </CommandBar.Content>
-            <AppBarButton Icon="Add" Label="Départ"/>
-            <AppBarButton Icon="Remove" Label="Arrivée"/>
-            <AppBarButton Icon="Setting" Label="Paramètres"/>
-        </CommandBar>
-    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot Title="Windsup RFID App">
+            <PivotItem Header="Parti">
+                <StackPanel>
+                    
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="Stock">
+                <StackPanel>
+                    
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="Paramètres">
+                <StackPanel>
+                    <StackPanel Margin="10">
+                        <Button x:Name="send" Content="Export .csv"/>
+                    </StackPanel>
+                    <StackPanel Margin="10">
+                        <Button x:Name="newSUP" Content="Nouvelle planche" />
+                    </StackPanel>
+                    <StackPanel Margin="10">
+                        <Button x:Name="newTyp" Content="Nouvelle catégorie" />
+                    </StackPanel>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Bluetooth" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Name="txtBLEStat" Text="not connected"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
 
     </Grid>
 </Page>
