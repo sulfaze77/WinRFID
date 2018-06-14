@@ -10,9 +10,13 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot Title="Windsup RFID App">
             <PivotItem Header="Parti">
-                <StackPanel>
-                    
-                </StackPanel>
+                <ListView x:Name="LeftShow" ItemsSource="{Binding LeftSUP}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:SUP">
+                            <TextBlock Text="Hello there"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </PivotItem>
             <PivotItem Header="Stock">
                 <StackPanel>
@@ -20,22 +24,66 @@
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Paramètres">
-                <StackPanel>
-                    <StackPanel Margin="10">
-                        <Button x:Name="send" Content="Export .csv"/>
+                <ScrollViewer>
+                    <StackPanel >
+                        <StackPanel Margin="10" HorizontalAlignment="Center">
+                            <Button x:Name="send" Content="Export .csv"/>
+                        </StackPanel>
+                        <StackPanel Margin="10" HorizontalAlignment="Center">
+                            <Button x:Name="newSUP" Content="Nouvelle planche" />
+                        </StackPanel>
+                        <StackPanel Margin="10" HorizontalAlignment="Center">
+                            <Button x:Name="newTyp" Content="Nouvelle catégorie" Click="newTyp_Click" >
+                                <Button.Flyout>
+                                    <Flyout Placement="Bottom">
+                                        <RelativePanel>
+                                            <TextBlock Text="Nouveau Nom      1/2h         1h          +1h" x:Name="NFields"/>
+                                            <StackPanel Orientation="Horizontal" x:Name="Fields4new" RelativePanel.Below="NFields">
+                                                <TextBox x:Name="newName" Width="100" />
+                                                <TextBox x:Name="newDemi" Width="50"  InputScope="Number"/>
+                                                <TextBox x:Name="newHour" Width="50"  InputScope="Number"/>
+                                                <TextBox x:Name="newSupp" Width="50"  InputScope="Number"/>
+                                            </StackPanel>
+                                            <Button  x:Name="ValidNewType" Margin="50,10" RelativePanel.Below="Fields4new"
+                                                RelativePanel.AlignHorizontalCenterWithPanel="True" Click="ValidNewType_Click">
+                                                <SymbolIcon Symbol="Accept"/>
+                                            </Button>
+                                        </RelativePanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,10,0" HorizontalAlignment="Left" >
+                            <TextBlock Text="Type SUP" Width="120" TextAlignment="Center" FontWeight="Bold" />
+                            <TextBlock Text="1/2h" Width="60"   TextAlignment="Center" FontWeight="Bold"    />
+                            <TextBlock Text=" 1h " Width="60"   TextAlignment="Center" FontWeight="Bold"    />
+                            <TextBlock Text="+1h " Width="60"   TextAlignment="Center" FontWeight="Bold"    />
+                        </StackPanel>
+                        <ListView x:Name="LV_Category" ItemsSource="{Binding SUPCategory}" Margin="10" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal" Margin="10" >
+                                        <TextBox Text="{Binding Name, Mode=TwoWay}" Width="100" TextAlignment="Center"/>
+                                        <TextBox Text="{Binding Demi, Mode=TwoWay}" Width="50"  TextAlignment="Center"/>
+                                        <TextBox Text="{Binding Hour, Mode=TwoWay}" Width="50"  TextAlignment="Center"/>
+                                        <TextBox Text="{Binding Supp, Mode=TwoWay}" Width="50"  TextAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel HorizontalAlignment="left" Orientation="Horizontal" Height="52">
+                            <TextBlock Text="Bluetooth" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,10"/>
+
+                            <Button Margin="10">
+                                <SymbolIcon Symbol="Link"/>
+                            </Button>
+                            <Button Margin="10">
+                                <SymbolIcon Symbol="TwoBars"/>
+                            </Button>
+                        </StackPanel>
+
                     </StackPanel>
-                    <StackPanel Margin="10">
-                        <Button x:Name="newSUP" Content="Nouvelle planche" />
-                    </StackPanel>
-                    <StackPanel Margin="10">
-                        <Button x:Name="newTyp" Content="Nouvelle catégorie" />
-                    </StackPanel>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="Bluetooth" FontWeight="Bold" Margin="0,0,0,10"/>
-                        <TextBlock Name="txtBLEStat" Text="not connected"/>
-                    </StackPanel>
-                    
-                </StackPanel>
+                </ScrollViewer>
             </PivotItem>
         </Pivot>
 
