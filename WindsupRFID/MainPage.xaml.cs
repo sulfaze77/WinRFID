@@ -30,10 +30,9 @@ namespace WindsupRFID
         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
         // DateTime for deltaTime for price
         //List<SUPData> SUPCategory = new List<SUPData>();
-        List<SUP> Stock = new List<SUP>();
         
         ObservableCollection<SUPData> SUPCategory = new ObservableCollection<SUPData>();
-        ObservableCollection<SUPData> LeftSUP = new ObservableCollection<SUPData>();
+        ObservableCollection<SUP> LeftSUP = new ObservableCollection<SUP>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -60,12 +59,12 @@ namespace WindsupRFID
               && Int32.TryParse(newSupp.Text, out nSupp))
             {
                SUPCategory.Add(new SUPData(newName.Text, SUPCategory.Count, nDemi, nHour, nSupp));
-               
-               
+
+               flyNewType.Hide();
             }
             else
             {
-
+                // TODO: Notify wrong value
             }
             
             

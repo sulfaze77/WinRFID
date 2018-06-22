@@ -13,7 +13,9 @@
                 <ListView x:Name="LeftShow" ItemsSource="{Binding LeftSUP}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:SUP">
-                            <TextBlock Text="Hello there"/>
+                            <StackPanel Orientation="Horizontal">
+                                
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -35,7 +37,7 @@
                         <StackPanel Margin="10" HorizontalAlignment="Center">
                             <Button x:Name="newTyp" Content="Nouvelle catégorie" Click="newTyp_Click" >
                                 <Button.Flyout>
-                                    <Flyout Placement="Bottom">
+                                    <Flyout Placement="Bottom" x:Name="flyNewType">
                                         <RelativePanel>
                                             <TextBlock Text="Nouveau Nom      1/2h         1h          +1h" x:Name="NFields"/>
                                             <StackPanel Orientation="Horizontal" x:Name="Fields4new" RelativePanel.Below="NFields">
