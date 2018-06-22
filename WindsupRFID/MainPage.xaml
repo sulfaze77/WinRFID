@@ -26,13 +26,13 @@
             <PivotItem Header="Paramètres">
                 <ScrollViewer>
                     <StackPanel >
-                        <StackPanel Margin="10" HorizontalAlignment="Center">
+                        <StackPanel Margin="10" HorizontalAlignment="Left">
                             <Button x:Name="send" Content="Export .csv"/>
                         </StackPanel>
-                        <StackPanel Margin="10" HorizontalAlignment="Center">
+                        <StackPanel Margin="10" HorizontalAlignment="Left">
                             <Button x:Name="newSUP" Content="Nouvelle planche" />
                         </StackPanel>
-                        <StackPanel Margin="10" HorizontalAlignment="Center">
+                        <StackPanel Margin="10" HorizontalAlignment="Left">
                             <Button x:Name="newTyp" Content="Nouvelle catégorie" Click="newTyp_Click" >
                                 <Button.Flyout>
                                     <Flyout Placement="Bottom">
