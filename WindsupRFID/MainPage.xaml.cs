@@ -30,23 +30,24 @@ namespace WindsupRFID
         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
         // DateTime for deltaTime for price
         //List<SUPData> SUPCategory = new List<SUPData>();
-        
+        List<SUP> Stock = new List<SUP>();
+
         ObservableCollection<SUPData> SUPCategory = new ObservableCollection<SUPData>();
-        ObservableCollection<SUP> LeftSUP = new ObservableCollection<SUP>();
+        ObservableCollection<SUPData> LeftSUP = new ObservableCollection<SUPData>();
         public MainPage()
         {
             this.InitializeComponent();
-            
-            SUPCategory.Add(new SUPData("PVC",1, 8, 10, 8));
-            
-            SUPCategory.Add(new SUPData("Gonflable",2, 8, 12, 8));
+
+            SUPCategory.Add(new SUPData("PVC", 1, 8, 10, 8));
+
+            SUPCategory.Add(new SUPData("Gonflable", 2, 8, 12, 8));
 
             LV_Category.ItemsSource = SUPCategory;
         }
 
         private void newTyp_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void ValidNewType_Click(object sender, RoutedEventArgs e)
@@ -54,20 +55,15 @@ namespace WindsupRFID
             int nDemi;
             int nHour;
             int nSupp;
-            if(Int32.TryParse(newDemi.Text, out nDemi)
+            if (Int32.TryParse(newDemi.Text, out nDemi)
               && Int32.TryParse(newHour.Text, out nHour)
               && Int32.TryParse(newSupp.Text, out nSupp))
             {
-               SUPCategory.Add(new SUPData(newName.Text, SUPCategory.Count, nDemi, nHour, nSupp));
+                SUPCategory.Add(new SUPData(newName.Text, SUPCategory.Count, nDemi, nHour, nSupp));
+                newTyp.Flyout.Hide();
 
-               flyNewType.Hide();
             }
-            else
-            {
-                // TODO: Notify wrong value
-            }
-            
-            
+
 
 
 
