@@ -7,20 +7,44 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot Title="Windsup RFID App">
+        <Pivot Title="Windsup NFC tags App"  x:Name="mainPivot">
             <PivotItem Header="Parti">
-                <ListView x:Name="LeftShow" ItemsSource="{Binding LeftSUP}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:SUP">
-                            <TextBlock Text="Hello there"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <RelativePanel >
+                    <Button x:Name="btnLFTRefreshTime" RelativePanel.AlignRightWithPanel="True" Margin="10" Click="btnLFTRefreshTime_Click">
+                        <SymbolIcon Symbol="Sync"/>
+                    </Button>
+                    <ListView x:Name="LeftShow" RelativePanel.Below="btnLFTRefreshTime" MinWidth="300" MinHeight="500" RelativePanel.AlignHorizontalCenterWithPanel="True" ItemsSource="{Binding AwaySUP}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:SUP">
+                                <StackPanel Orientation="Horizontal" Margin="10" Width="500" Tapped="StackPanel_Tapped">
+                                    <TextBlock Text="{x:Bind strType, Mode=OneWay}" Width="150" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="{x:Bind strTime, Mode=OneWay}" HorizontalAlignment="Right" />
+                                </StackPanel>
+                                
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </RelativePanel>
             </PivotItem>
             <PivotItem Header="Stock">
                 <StackPanel>
-                    
+                    <TextBlock x:Name="showNbStock" />
+                    <ListView x:Name="StockShow" MinWidth="200" MinHeight="500" RelativePanel.AlignHorizontalCenterWithPanel="True" ItemsSource="{Binding StockSUP}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="{Binding strType}" Width="70" Margin="3" />
+                                    <TextBlock Text="{Binding strID}"  Margin="20,3" HorizontalAlignment="Right"/>
+                                    <Button Tag="{Binding strID}" x:Name="btn_DelSUP" Click="btn_DelSUP_Click" >
+                                        <SymbolIcon Symbol="Cancel" />
+                                    </Button>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Paramètres">
@@ -29,11 +53,25 @@
                         <StackPanel Margin="10" HorizontalAlignment="Left">
                             <Button x:Name="send" Content="Export .csv"/>
                         </StackPanel>
+                        <Button Margin="10" Content="Restart NFC" Click="Button_Click_1" />
+                        <Button Margin="10" Content="Nouvelle SUP" Click="Button_Click">
+                            <Button.Flyout>
+                                <Flyout Placement="Bottom" Closed="Flyout_Closed">
+                                    <StackPanel >
+                                        <TextBlock Text="Choisir Type, puis valider en approchant du tag."/>
+                                        <ComboBox x:Name="NS_Cat" ItemsSource="{Binding ElementName=LV_Category}" Margin="5" SelectionChanged="NS_Cat_SelectionChanged"  >
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate >
+                                                    <TextBlock Text="{Binding Name}" Width="100" TextAlignment="Left"/>                                                    
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
                         <StackPanel Margin="10" HorizontalAlignment="Left">
-                            <Button x:Name="newSUP" Content="Nouvelle planche" />
-                        </StackPanel>
-                        <StackPanel Margin="10" HorizontalAlignment="Left">
-                            <Button x:Name="newTyp" Content="Nouvelle catégorie" Click="newTyp_Click" >
+                            <Button x:Name="newTyp" Content="Nouvelle catégorie" >
                                 <Button.Flyout>
                                     <Flyout Placement="Bottom">
                                         <RelativePanel>
@@ -53,39 +91,38 @@
                                 </Button.Flyout>
                             </Button>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="10,10,10,0" HorizontalAlignment="Left" >
+                        <ToggleSwitch HorizontalAlignment="Left" Margin="20,0" Name="TglBlockModifType" OffContent="Débloquer" OnContent="Bloquer" Toggled="TglBlockModifType_Toggled"/>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,10,10,0" HorizontalAlignment="Left" >
                             <TextBlock Text="Type SUP" Width="120" TextAlignment="Center" FontWeight="Bold" />
-                            <TextBlock Text="1/2h" Width="60"   TextAlignment="Center" FontWeight="Bold"    />
-                            <TextBlock Text=" 1h " Width="60"   TextAlignment="Center" FontWeight="Bold"    />
+                            <TextBlock Text="1/2h" Width="50"   TextAlignment="Center" FontWeight="Bold"    />
+                            <TextBlock Text=" 1h " Width="65"   TextAlignment="Center" FontWeight="Bold"    />
                             <TextBlock Text="+1h " Width="60"   TextAlignment="Center" FontWeight="Bold"    />
                         </StackPanel>
-                        <ListView x:Name="LV_Category" ItemsSource="{Binding SUPCategory}" Margin="10" >
+                        <ListView x:Name="LV_Category" ItemsSource="{Binding SUPCategory}" Margin="0" HorizontalAlignment="Left">
                             <ListView.ItemTemplate>
                                 <DataTemplate >
-                                    <StackPanel Orientation="Horizontal" Margin="10" >
-                                        <TextBox Text="{Binding Name, Mode=TwoWay}" Width="100" TextAlignment="Center"/>
-                                        <TextBox Text="{Binding Demi, Mode=TwoWay}" Width="50"  TextAlignment="Center"/>
-                                        <TextBox Text="{Binding Hour, Mode=TwoWay}" Width="50"  TextAlignment="Center"/>
-                                        <TextBox Text="{Binding Supp, Mode=TwoWay}" Width="50"  TextAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal" Margin="-12,0" >
+                                        <TextBox x:Name="TM_N" Text="{Binding Name, Mode=TwoWay}" Width="100" TextAlignment="Center" TextChanged="TM_N_TextChanged"/>
+                                        <TextBox x:Name="TM_D" Text="{Binding Demi, Mode=TwoWay}" Width="20"  TextAlignment="Center" TextChanged="TM_D_TextChanged"/>
+                                        <TextBox x:Name="TM_H" Text="{Binding Hour, Mode=TwoWay}" Width="30"  TextAlignment="Center" TextChanged="TM_H_TextChanged"/>
+                                        <TextBox x:Name="TM_S" Text="{Binding Supp, Mode=TwoWay}" Width="30"  TextAlignment="Center" TextChanged="TM_S_TextChanged"/>
+                                        <Button Tag="{Binding Name}" x:Name="btn_DelCat" Width="40" Click="btn_DelCat_Click">
+                                            <SymbolIcon Symbol="Cancel" />
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <StackPanel HorizontalAlignment="left" Orientation="Horizontal" Height="52">
-                            <TextBlock Text="Bluetooth" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,10"/>
-
-                            <Button Margin="10">
-                                <SymbolIcon Symbol="Link"/>
-                            </Button>
-                            <Button Margin="10">
-                                <SymbolIcon Symbol="TwoBars"/>
-                            </Button>
-                        </StackPanel>
+                        <TextBlock Opacity="0.3" Text="WindRFID by GearsKnight, Yorick Droz-dit-Busset" Margin="0,100,0,0"/>
+                        <TextBlock Opacity="0.3" Text="Sources sur https://github.com/sulfaze77/WinRFID"  Margin="0,5"/>
 
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
         </Pivot>
+        <Image x:Name="WindLogo" Source="Assets/Square44x44Logo.targetsize-256.png"  HorizontalAlignment="right" Height="60" Margin="0,0,0,0" VerticalAlignment="Top" Width="60"  />
 
     </Grid>
+    
 </Page>
