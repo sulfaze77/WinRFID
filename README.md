@@ -30,3 +30,6 @@ In the long run, Clients infos should be embedded in the device, to follow Switz
   // Client get back after some time
   * Scan ID again => get time spent
   * calculate price from Time vs SUP table
+# Features for future versions:
+  * Add client database for statistics, security, and ease of use
+  * capability to export .csv or update a FileMakerPro database for Windsup accountability
